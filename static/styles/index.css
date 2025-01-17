@@ -21,6 +21,10 @@ body {
 
 /* navbar */
 
+nav {
+  height: 10vh;
+}
+
 body nav .nav-content {
   display: flex;
   justify-content: space-between;
@@ -68,7 +72,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 85vh;
   width: 80%;
   margin: 0 auto;
 }
@@ -87,4 +91,20 @@ p {
   width: 700px;
   height: 300px;
   border-radius: 20px;
+}
+
+.arrow {
+  margin-top: 30px;
+  cursor: pointer;
+  border: #707070 1px solid;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+footer {
+  margin-left: 20px;
+}
+
+footer p {
+  color: rgba(83, 83, 83, 1);
 }
