@@ -7,6 +7,15 @@ import (
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./html/index.html")
 }
+func ArtisteHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./html/artiste.html")
+}
+func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./html/artistes.html")
+}
+func ContactHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./html/contact.html")
+}
 func erreurHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./html/404.html")
 }
@@ -14,6 +23,9 @@ func erreurHandler(w http.ResponseWriter, r *http.Request) {
 func setupRoutes() {
 	http.HandleFunc("/index", HomeHandler)
 	http.HandleFunc("/404", erreurHandler)
+	http.HandleFunc("/artiste", ArtisteHandler)
+	http.HandleFunc("/artistes", ArtistesHandler)
+	http.HandleFunc("/contact", ContactHandler)
 
 }
 
