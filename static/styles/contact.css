@@ -1,0 +1,124 @@
+@font-face {
+  font-family: questrial;
+  src: url(../fonts/Questrial-Regular.ttf);
+}
+
+* {
+  font-family: questrial;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(30, 30, 30, 1);
+  color: rgba(230, 232, 230, 1);
+}
+
+body {
+  height: 100vh;
+}
+
+/* navbar */
+
+body nav .nav-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 70px 20px 40px;
+}
+
+.nav-content .right-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-content .right-nav ul {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+}
+.right-nav ul li {
+  margin-left: 30px;
+  list-style: none;
+}
+.right-nav ul li a {
+  text-decoration: none;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #aaa;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #707070; /* Couleur des lignes */
+  margin: 0 100px; /* Espacement entre le texte et les lignes */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 60px;
+  padding: 100px;
+  height: 100vh;
+}
+
+.about {
+  width: 45%;
+  font-size: 1.3rem;
+}
+
+h2 {
+  margin-bottom: 30px;
+}
+
+.contact h2 {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.contact {
+  width: 45%;
+  font-size: 1.3rem;
+}
+
+.contact input,
+.contact textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #333;
+}
+
+.contact textarea {
+  height: 150px;
+}
+
+.contact input {
+  height: 40px;
+}
+
+.contact input::placeholder,
+.contact textarea::placeholder {
+  color: #ffffff;
+  padding: 15px;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact button {
+  padding: 10px 50px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #333;
+}
