@@ -1,0 +1,96 @@
+@font-face {
+  font-family: questrial;
+  src: url(../fonts/Questrial-Regular.ttf);
+}
+@font-face {
+  font-family: italiana;
+  src: url(../fonts/Italiana-Regular.ttf);
+}
+
+* {
+  font-family: questrial;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(30, 30, 30, 1);
+  color: rgba(230, 232, 230, 1);
+}
+
+body {
+  height: 100vh;
+}
+
+/* navbar */
+
+nav {
+  height: 10vh;
+}
+
+body nav .nav-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 70px 20px 40px;
+}
+
+.nav-content .right-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-content .right-nav ul {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+}
+.right-nav ul li {
+  margin-left: 30px;
+  list-style: none;
+}
+.right-nav ul li a {
+  text-decoration: none;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #aaa;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #707070; /* Couleur des lignes */
+  margin: 0 100px; /* Espacement entre le texte et les lignes */
+}
+
+/* main */
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 50px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: aliceblue;
+  width: 220px;
+  height: 270px;
+  border: 1px solid aliceblue;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+
+.card img {
+  height: 70%;
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+}
+
+.card-description p {
+  background-color: aliceblue;
+  color: rgba(30, 30, 30, 1);
+}
