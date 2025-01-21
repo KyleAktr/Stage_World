@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/styles/artistes.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -28,49 +32,44 @@
     </nav>
     <main>
       <div class="cards">
+        {{range .Artists}}
         <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
+          <img src="{{.Image}}" alt="Image de {{.Name}}" />
           <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
+            <p>Nom : {{.Name}}</p>
+            <p>Date de création : {{.CreationDate}}</p>
           </div>
         </div>
-        <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
-          <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
-          <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
-          <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
-          <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="../static/img/logo-stage-world.png" alt="" />
-          <div class="card-description">
-            <p>Nom :</p>
-            <p>Date de création :</p>
-          </div>
-        </div>
+        {{end}}
+      </div>
+      <div class="navigation-container">
+        <button
+          onclick="changePage({{.CurrentPage}} - 1)"
+          class="nav-button"
+          {{if
+          eq
+          .CurrentPage
+          1}}disabled{{end}}
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <span class="page-info">Page {{.CurrentPage}} sur {{.TotalPages}}</span>
+        <button
+          onclick="changePage({{.CurrentPage}} + 1)"
+          class="nav-button"
+          {{if
+          eq
+          .CurrentPage
+          .TotalPages}}disabled{{end}}
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </main>
+    <script>
+      function changePage(page) {
+        window.location.href = "/artistes?page=" + page;
+      }
+    </script>
   </body>
 </html>
