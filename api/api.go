@@ -18,11 +18,43 @@ type LocalArtist struct {
 	Members      []string `json:"members"`
 }
 
+// ArtistDetails représente les détails complets d'un artiste
+type ArtistDetails struct {
+	ID           int           `json:"id"`
+	Image        string        `json:"image"`
+	Name         string        `json:"name"`
+	CreationDate int          `json:"creationDate"`
+	Members      []string      `json:"members"`
+	Locations    Locations     `json:"locations"`
+	Concerts     ConcertDates  `json:"concertDates"`
+	Relations    Relations     `json:"relations"`
+}
+
+// Locations représente les lieux de concert
+type Locations struct {
+	Locations []string `json:"locations"`
+}
+
+// ConcertDates représente les dates de concert
+type ConcertDates struct {
+	Dates []string `json:"dates"`
+}
+
+// Relations représente les relations entre les lieux et les dates
+type Relations struct {
+	DatesLocations map[string][]string `json:"datesLocations"`
+}
+
 // PageData contient les données pour le template
 type PageData struct {
 	Artists     []LocalArtist
 	CurrentPage int
 	TotalPages  int
+}
+
+// ArtistPageData contient les données pour la page d'un artiste
+type ArtistPageData struct {
+	Artist *ArtistDetails
 }
 
 // fetchArtistsFromAPI appelle votre API pour récupérer une liste d'artistes
@@ -43,10 +75,54 @@ func fetchArtistsFromAPI(apiURL string) ([]LocalArtist, error) {
 		return nil, err
 	}
 
-	// Afficher les données reçues pour debug
-	fmt.Printf("Données reçues de l'API: %+v\n", artists)
-
 	return artists, nil
+}
+
+// GetArtistByID récupère les détails d'un artiste spécifique
+func GetArtistByID(id string) (*ArtistDetails, error) {
+	// Afficher l'URL pour le débogage
+	artistURL := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/artists/%s", id)
+	log.Printf("Tentative de récupération de l'artiste à l'URL : %s\n", artistURL)
+	
+	resp, err := http.Get(artistURL)
+	if err != nil {
+		log.Printf("Erreur lors de la requête HTTP : %v\n", err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Status code non-OK reçu : %d\n", resp.StatusCode)
+		return nil, fmt.Errorf("artiste non trouvé (status: %d)", resp.StatusCode)
+	}
+
+	var artist ArtistDetails
+	if err := json.NewDecoder(resp.Body).Decode(&artist); err != nil {
+		log.Printf("Erreur lors du décodage JSON : %v\n", err)
+		return nil, err
+	}
+
+	// Récupérer les informations supplémentaires (relations)
+	relationsURL := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/relation/%s", id)
+	log.Printf("Tentative de récupération des relations à l'URL : %s\n", relationsURL)
+	
+	respRel, err := http.Get(relationsURL)
+	if err != nil {
+		log.Printf("Erreur lors de la requête des relations : %v\n", err)
+		return nil, err
+	}
+	defer respRel.Body.Close()
+
+	if respRel.StatusCode == http.StatusOK {
+		if err := json.NewDecoder(respRel.Body).Decode(&artist.Relations); err != nil {
+			log.Printf("Erreur lors du décodage des relations : %v\n", err)
+			return nil, err
+		}
+	} else {
+		log.Printf("Status code non-OK pour les relations : %d\n", respRel.StatusCode)
+	}
+
+	return &artist, nil
 }
 
 // Handler gère la logique pour récupérer l'artiste, puis afficher les informations

@@ -21,7 +21,7 @@
         </div>
         <div class="right-nav">
           <ul>
-            <li><a href="/artistes">Artistes</a></li>
+            <li><a href="/index">Accueil</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
@@ -33,13 +33,15 @@
     <main>
       <div class="cards">
         {{range .Artists}}
-        <div class="card">
-          <img src="{{.Image}}" alt="Image de {{.Name}}" />
-          <div class="card-description">
-            <p>Nom : {{.Name}}</p>
-            <p>Date de création : {{.CreationDate}}</p>
+        <a href="/artiste/{{.ID}}" class="card-link">
+          <div class="card">
+            <img src="{{.Image}}" alt="Image de {{.Name}}" />
+            <div class="card-description">
+              <p>Nom : {{.Name}}</p>
+              <p>Date de création : {{.CreationDate}}</p>
+            </div>
           </div>
-        </div>
+        </a>
         {{end}}
       </div>
       <div class="navigation-container">
