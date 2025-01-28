@@ -3,9 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="../static/styles/artiste.css" />
+    <title>Stage World - Suivez vos artistes partout sur le globe</title>
   </head>
   <body>
-    <h1>ARTISTE</h1>
+    <nav>
+      <div class="nav-content">
+        <div class="left-nav">
+          <img
+            src="../static/img/logo-stage-world.png"
+            alt="logo de stage world"
+          />
+        </div>
+        <div class="right-nav">
+          <ul>
+            <li><a href="/artistes">Artistes</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="separator">
+        <span></span>
+      </div>
+    </nav>
+    <main>
+      <h1>
+        {{.Name}}
+      </h1>
+      <p>MEMBRES DU GROUPE : {{range .Members}}{{.}}, {{end}}</p>
+      <p>DATE DE CREATION : {{.CreationDate}}</p>
+      <div class="spotify">
+        <iframe
+          src="https://open.spotify.com/embed/artist/{{.SpotifyArtistID}}"
+          width="300"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        >
+        </iframe>
+      </div>
+      <div class="Image">
+        <img src="{{.Image}}" alt="Image de {{.Name}}" />
+      </div>
+    </main>
   </body>
 </html>
