@@ -4,10 +4,28 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strconv"
 )
+
+var ItemsPerPage = 6
+
+func SetItemsPerPageHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
+
+	valueStr := r.URL.Query().Get("value")
+	value, err := strconv.Atoi(valueStr)
+	if err != nil {
+		http.Error(w, "Valeur invalide", http.StatusBadRequest)
+		return
+	}
+
+	ItemsPerPage = value
+	fmt.Fprintf(w, "itemsPerPage mis à jour : %d", ItemsPerPage)
+}
 
 // LocalArtist représente la structure des artistes retournés par l'API
 type LocalArtist struct {
@@ -63,20 +81,18 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	allArtists, err := fetchArtistsFromAPI(apiURL)
 	if err != nil {
 		http.Error(w, "Impossible de récupérer les artistes depuis l'API", http.StatusInternalServerError)
-		log.Println("Erreur API Locale:", err)
 		return
 	}
 
 	// Calculer la pagination
-	const itemsPerPage = 6
-	totalPages := (len(allArtists) + itemsPerPage - 1) / itemsPerPage
+	totalPages := (len(allArtists) + ItemsPerPage - 1) / ItemsPerPage
 	if page > totalPages {
 		page = totalPages
 	}
 
 	// Sélectionner les artistes pour la page courante
-	start := (page - 1) * itemsPerPage
-	end := start + itemsPerPage
+	start := (page - 1) * ItemsPerPage
+	end := start + ItemsPerPage
 	if end > len(allArtists) {
 		end = len(allArtists)
 	}
@@ -91,14 +107,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("./html/artistes.html")
 	if err != nil {
 		http.Error(w, "Erreur lors du chargement du template", http.StatusInternalServerError)
-		log.Printf("Erreur template: %v\n", err)
 		return
 	}
 
 	err = tmpl.Execute(w, pageData)
 	if err != nil {
 		http.Error(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError)
-		log.Printf("Erreur exécution template: %v\n", err)
 		return
 	}
 }

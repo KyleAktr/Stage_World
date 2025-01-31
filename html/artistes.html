@@ -21,7 +21,7 @@
         </div>
         <div class="right-nav">
           <ul>
-            <li><a href="/artistes">Artistes</a></li>
+            <li><a href="/index">Accueil</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
@@ -72,6 +72,16 @@
       function changePage(page) {
         window.location.href = "/artistes?page=" + page;
       }
+
+      function updateItemsPerPage() {
+        let width = window.innerWidth;
+        let itemsPerPage = width <= 900 ? 4 : 6;
+
+        fetch("/set-items-per-page?value=" + itemsPerPage, { method: "POST" });
+      }
+
+      window.onload = updateItemsPerPage;
+      window.onresize = updateItemsPerPage;
     </script>
   </body>
 </html>

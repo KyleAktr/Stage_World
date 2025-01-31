@@ -35,6 +35,7 @@ func setupRoutes() {
 	http.HandleFunc("/artiste", api.ArtistHandler) // On appelle le handler artiste
 	http.HandleFunc("/artistes", api.Handler)
 	http.HandleFunc("/contact", ContactHandler)
+	http.HandleFunc("/set-items-per-page", api.SetItemsPerPageHandler)
 }
 
 func main() {
