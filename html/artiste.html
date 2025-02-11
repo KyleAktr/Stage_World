@@ -46,6 +46,21 @@
       <div class="Image">
         <img src="{{.Image}}" alt="Image de {{.Name}}" />
       </div>
+      <div class="concerts">
+        <h2>Prochains concerts</h2>
+        {{if .Concerts}}
+          <div class="concert-list">
+            {{range .Concerts}}
+              <div class="concert-item">
+                <p class="location"> {{.Location}}</p>
+                <p class="date">{{.Date}}</p>
+              </div>
+            {{end}}
+          </div>
+        {{else}}
+          <p>Aucun concert prévu pour le moment.</p>
+        {{end}}
+      </div>
     </main>
   </body>
 </html>
